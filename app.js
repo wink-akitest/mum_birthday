@@ -511,7 +511,7 @@ function switchTab(cat, btn) {
   renderDishes(cat);
 }
 
-// ===================== 打開食譜彈窗 =====================
+// ===================== 打開食譜彈窗（修復版） =====================
 function openRecipe(dish) {
   currentModalDish = dish;
   document.getElementById('modalEmoji').textContent = dish.emoji;
@@ -589,7 +589,7 @@ function updatePlanDisplay() {
   }
 }
 
-// ===================== 生成買菜清單 =====================
+// ===================== 生成買菜清單（修復版） =====================
 function generateShoppingList() {
   const selected = Object.values(currentPlan).filter(d => d !== null);
   if (selected.length === 0) {
@@ -622,7 +622,7 @@ function generateShoppingList() {
     catDiv.className = 'shopping-category';
     const unique = [...new Set(items)];
     const itemsHtml = unique.map(name =>
-      '<div class="shopping-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked')">' +
+      '<div class="shopping-item"><input type="checkbox" onchange="this.parentElement.classList.toggle(\'checked\')">' +
       '<span>' + name + '</span></div>'
     ).join('');
     catDiv.innerHTML = '<h4>' + catName + '</h4>' + itemsHtml;
@@ -637,14 +637,11 @@ function closeShoppingModal() {
   document.getElementById('shoppingModal').classList.remove('active');
 }
 
-// ===================== 複製清單 =====================
+// ===================== 複製清單（修復版） =====================
 function copyList() {
   const items = [];
   document.querySelectorAll('.shopping-item span').forEach(el => items.push(el.textContent));
-  const text = '🛒 今晚煮什麼 - 買菜清單
-
-' + items.join('
-');
+  const text = '🛒 今晚煮什麼 - 買菜清單\n\n' + items.join('\n');
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() =>
       updateDaughter('清單已複製！可以貼到備忘錄裡～')
